@@ -7,7 +7,7 @@ require('./starters/start-middlewares');
 require('./starters/start-mysql'); 
 require('./routes');
 
-let port = 8081;
+let port = 3000;
 
 if (process.env.PORT){
     port = process.env.PORT;
