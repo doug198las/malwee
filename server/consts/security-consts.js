@@ -1,0 +1,2 @@
+exports.USER_TYPE_PUBLIC  = 0;
+exports.USER_TYPE_PRIVATE = 1;
