@@ -63,7 +63,6 @@ const runInContext = async (req, resp, fn, userTypes) => {
         await fn(req, resp);
         
         await transaction.commit();
-        
     }catch(e){
         if (transaction){
             await transaction.rollback();

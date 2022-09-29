@@ -10,8 +10,7 @@ knl.post('logon', async (req, resp) => {
 
     knl.validate(req.body, schema);
 
-    const sequelize = knl.sequelize();
-    const result = await sequelize.models.Usuario.findAll({
+    const result = await knl.sequelize().models.Usuario.findAll({
         where : {
             username : req.body.username,
             password : req.body.password
