@@ -2,11 +2,9 @@ require('./config/env-config');
 require('./starters/start-async-storange');
 require('./starters/start-express');
 require('./starters/start-bodyparser');
+// Sempre iniciar o sequelize depois do express
 require('./starters/start-sequelize');
 require('./starters/start-middlewares');
-// Sempre iniciar o mysql depois do express
-require('./starters/start-mysql'); 
-
 require('./starters/start-sync-db');
 require('./routes');
 
