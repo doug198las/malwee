@@ -25,6 +25,8 @@ getApiErrorCode = (error) =>{
 addError('0003', 'JSON with invalid fields / without required fields / with invalid values');
 addError('0004', 'Invalid token', 403);
 addError('0005', 'Logon denied', 401);
+addError('0006', 'User already exists');
+addError('0007', 'Password are not equals');
 
 
 exports.getApiErrorCode = getApiErrorCode;

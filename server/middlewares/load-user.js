@@ -1,14 +1,25 @@
 const knl = require('../knl');
 
-knl.express.use((req, resp, next) => {
+knl.express.use(async (req, resp, next) => {
     if (req.app.public){
         next();
         return;
     }
 
-    // Load user from database
-    // Se não achar o usuário no banco, subir exceção
+    const result = await req.app.sequelize.models.Usuario.findAll({
+        where : {
+            id : req.app.userid
+        }
+    });
 
-    req.app.session = {};
+    if (knl.objects.isEmptyArray(result)){
+        resp.json(knl.createExceptionObject('0004'));
+        resp.status(401);
+        resp.end();
+        return;
+    }
+
+    req.app.session = knl.objects.copy(result[0]);
+    delete req.app.session.password;
     next();
 });

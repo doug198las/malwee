@@ -1,13 +1,16 @@
 const knl = require('../knl');
+const jwt = require('../utils/jwt');
 
-knl.express.use((req, resp, next) => {
+knl.express.use(async(req, resp, next) => {
     let rawToken = req.headers['authorization'];
 
-    req.app = {
-        public          : true,
-        token           : undefined,
-        securitySession : undefined
-    };
+    if (!req.app){
+        req.app = {};
+    }
+
+    req.app.public          = true;
+    req.app.token           = undefined;
+    req.app.securitySession = undefined;
 
     if (!rawToken){
         next();
@@ -21,14 +24,18 @@ knl.express.use((req, resp, next) => {
         return;
     }
 
-    rawToken = rawToken[1];
+    rawToken = auth[1];
 
     req.app.public = false;
     req.app.token  = rawToken;
+    try{
+        const user = await jwt.verify(rawToken);
 
-    // Validate JWT
-
-    req.app.userid = '';
-
-    next();
+        req.app.userid = user.userid;
+        next();
+    }catch(e){
+        resp.json(knl.createExceptionObject('0004'));
+        resp.status(401);
+        resp.end();   
+    }
 })

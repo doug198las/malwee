@@ -13,7 +13,7 @@ module.exports.verify = (token) => {
                 return;
             }
 
-            resolve(decode.userid);
+            resolve(decode);
         })
     })
 }

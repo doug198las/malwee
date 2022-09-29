@@ -19,10 +19,12 @@ knl.post('logon', async (req, resp) => {
         }
     })
 
-    knl.createException('0005', knl.objects.isEmptyArray(result));
+    knl.createException('0005', '', knl.objects.isEmptyArray(result));
     
-    const user = result[0];
+    const user = knl.objects.copy(result[0]);
     delete user.password;
+    delete user.createdAt;
+    delete user.updatedAt;
 
     resp.json({
         token : jwt.sign(user.id),
