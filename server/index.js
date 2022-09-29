@@ -5,6 +5,8 @@ require('./starters/start-bodyparser');
 require('./starters/start-middlewares');
 // Sempre iniciar o mysql depois do express
 require('./starters/start-mysql'); 
+require('./starters/start-sequelize');
+require('./starters/start-sync-db');
 require('./routes');
 
 let port = 3000;

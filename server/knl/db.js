@@ -10,21 +10,21 @@ module.exports = (connection) => {
 
     return {
         close : async () => {
-            // connection.end();
+            await connection.end();
         },
     
         startTransaction : async () => {
-            // await connection.query('BEGIN');
+            await connection.beginTransaction();
             transaction = true;
         },
 
         commitTransaction : async () => {
-            // await connection.query('COMMIT');
+            await connection.commit();
             transaction = false;
         },
 
         rollbackTransaction : async () => {
-            // await connection.query('ROLLBACK');
+            await connection.rollback();
             transaction = false;
         },
 

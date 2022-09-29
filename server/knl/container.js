@@ -22,13 +22,13 @@ const runInContext = async (req, resp, fn, userTypes) => {
         connection = global.app.context.getStore()?.db; 
 
         await connection.startTransaction();
+
+        await fn(req, resp);
         
-        await fn(req, resp).then(async obj => {
-            await connection.commitTransaction();
-        }).catch(async error => {
-            await connection.rollbackTransaction();
-        });
+        await connection.commitTransaction();
+        
     }catch(e){
+        console.error(e);
         if (connection){
             await connection.rollbackTransaction();
         }
