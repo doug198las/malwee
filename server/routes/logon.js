@@ -2,6 +2,7 @@ const knl = require('../knl');
 const securityConsts = require('../consts/security-consts');
 const Joi = require('joi');
 const jwt = require('../utils/jwt');
+const md5 = require('../utils/md5-pass');
 
 knl.post('logon', async (req, resp) => {
     const schema = Joi.object({
@@ -14,7 +15,7 @@ knl.post('logon', async (req, resp) => {
     const result = await knl.sequelize().models.Usuario.findAll({
         where : {
             username : req.body.username,
-            password : req.body.password
+            password : md5(req.body.password)
         }
     })
 
