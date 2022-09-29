@@ -1,6 +1,7 @@
 const knl = require('../knl');
 const securityConsts = require('../consts/security-consts');
 const Joi = require('joi');
+const jwt = require('../utils/jwt');
 
 knl.post('logon', async (req, resp) => {
     const schema = Joi.object({
@@ -18,5 +19,13 @@ knl.post('logon', async (req, resp) => {
     })
 
     knl.createException('0005', knl.objects.isEmptyArray(result));
+    
+    const user = result[0];
+    delete user.password;
+
+    resp.json({
+        token : jwt.sign(user.id),
+        user  : user
+    });
     
 }, securityConsts.USER_TYPE_PUBLIC);
