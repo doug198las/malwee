@@ -10,6 +10,14 @@ knl.post('logon', async (req, resp) => {
 
     knl.validate(req.body, schema);
 
+    const sequelize = knl.sequelize();
+    const result = await sequelize.models.Usuario.findAll({
+        where : {
+            username : req.body.username,
+            password : req.body.password
+        }
+    })
 
+    knl.createException('0005', knl.objects.isEmptyArray(result));
     
 }, securityConsts.USER_TYPE_PUBLIC);

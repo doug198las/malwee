@@ -1,7 +1,7 @@
 const fs   = require('fs');
 const path = require('path')
 
-const loadModels = () => {
+const loadModels = (sequelize) => {
     const files = fs.readdirSync(__dirname);
 
     files.forEach(file => {
@@ -9,10 +9,12 @@ const loadModels = () => {
             return;
         }
         
-        if (file != 'index.js'){
-            require(__dirname + '/' + file);
+        if (file != 'load.js'){
+            require(__dirname + '/' + file)(sequelize);
         }
     })
 }
 
-loadModels();
+module.exports = (sequelize)=> {
+    loadModels(sequelize);
+}

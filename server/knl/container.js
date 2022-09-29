@@ -1,8 +1,46 @@
 const knl = require('../knl');
 const securityConsts = require('../consts/security-consts');
 
+const handleException = (e, req, resp) => {
+    console.error(e);
+    
+    const errorObject = {
+        ApiError         : '9999',
+        ErrorDescription : '<Description for this api error code not found>',
+        AditionalInfo    : '',
+        AditionalObject  : {},
+        HttpError        : 400
+    }
+
+    if (e.HttpError){
+        errorObject.HttpError = e.HttpError,
+        resp.status(e.HttpError);
+    } else {
+        resp.status(400);
+    }
+
+    if (e.ApiError){
+        errorObject.ApiError = e.ApiError;
+    }
+
+    if (e.ErrorDescription){
+        errorObject.ErrorDescription = e.ErrorDescription;
+    }
+
+    if (e.AditionalInfo){
+        errorObject.AditionalInfo = e.AditionalInfo;
+    }
+
+    if (e.AditionalObject){
+        errorObject.AditionalObject = e.AditionalObject;
+    }
+
+    resp.send(errorObject);
+}
+
 const runInContext = async (req, resp, fn, userTypes) => {
-    let connection = null;
+    let connection  = null;
+    let transaction = null;
 
     try{
         if (userTypes == undefined || userTypes == null){
@@ -19,24 +57,20 @@ const runInContext = async (req, resp, fn, userTypes) => {
         // Criar exceção aqui req.app.session == undefined;
         }
 
-        connection = global.app.context.getStore()?.db; 
-
-        await connection.startTransaction();
+        connection  = global.app.context.getStore()?.sequelize; 
+        transaction = await connection.transaction();
 
         await fn(req, resp);
         
-        await connection.commitTransaction();
+        await transaction.commit();
         
     }catch(e){
-        console.error(e);
-        if (connection){
-            await connection.rollbackTransaction();
+        if (transaction){
+            await transaction.rollback();
         }
+        handleException(e, req, resp);
     } finally{
         if (connection){
-            if (connection.isInTransaction()){
-                await connection.rollbackTransaction();
-            }
             connection.close();
         }
     };
@@ -44,10 +78,10 @@ const runInContext = async (req, resp, fn, userTypes) => {
 
 const container = (req, resp, fn, userTypes) => {
     global.app.context.run({
-        req   : req,
-        resp  : resp,
-        db    : req.app.db,
-        name  : knl.uuid()
+        req       : req,
+        resp      : resp,
+        sequelize : req.app.sequelize,
+        name      : knl.uuid()
     }, async () => {
         await runInContext(req, resp, fn, userTypes);
     })

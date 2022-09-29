@@ -10,6 +10,7 @@ module.exports = async () => {
     });
 
     await seq.authenticate();
+    require('../models/load')(seq);
     
     return seq;
 }

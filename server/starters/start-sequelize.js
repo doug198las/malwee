@@ -9,4 +9,5 @@ knl.express.use(async (req, resp, next) => {
     }
 
     req.app.sequelize = sequelize;
+    next();
 });
