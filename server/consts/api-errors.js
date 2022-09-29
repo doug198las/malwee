@@ -27,6 +27,7 @@ addError('0004', 'Invalid token', 403);
 addError('0005', 'Logon denied', 401);
 addError('0006', 'User already exists');
 addError('0007', 'Password are not equals');
+addError('0008', 'Request needs a token');
 
 
 exports.getApiErrorCode = getApiErrorCode;

@@ -53,8 +53,8 @@ const runInContext = async (req, resp, fn, userTypes) => {
 
         const publicUser = userTypes.find(element => element == securityConsts.USER_TYPE_PUBLIC);
 
-        if (!publicUser){
-        // Criar exceção aqui req.app.session == undefined;
+        if (publicUser != 0){
+            knl.createException('0008', '', !req.app.token || req.app.token == '');
         }
 
         connection  = global.app.context.getStore()?.sequelize; 
