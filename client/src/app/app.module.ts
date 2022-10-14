@@ -10,6 +10,9 @@ import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './header/header.component';
 import { MenuComponent } from './menu/menu.component';
 import { RouterModule } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSliderModule } from '@angular/material/slider';
+import { MaterialModule } from './material.module';
 
 @NgModule({
   declarations: [
@@ -25,6 +28,8 @@ import { RouterModule } from '@angular/router';
     AppRoutingModule,
     FormsModule,
     BlockUIModule.forRoot(),
+    BrowserAnimationsModule,
+    MaterialModule
   ],
   exports : [
     RouterModule
