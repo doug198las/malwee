@@ -1,15 +1,10 @@
 import { ModuleWithProviders } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { HomeComponent } from "./app/home/home.component";
-import { LoginComponent } from "./app/login/login.component";
-import { AuthService } from "./services/auth.service";
+import { AuthService } from "src/services/auth.service";
+import { HomeComponent } from "./home/home.component";
+import { LoginComponent } from "./login/login.component";
+import { MenuItens } from "./menu-itens";
 
-const chieldRoutes: any = [
-  {
-    path: 'teste',
-    component: HomeComponent,
-  }
-]
 
 const rootRoutes: Routes = [
     {
@@ -20,7 +15,7 @@ const rootRoutes: Routes = [
         {
           path: '',
           canActivateChild: [AuthService],
-          children: chieldRoutes
+          children: MenuItens
         }
       ]
     },
@@ -34,5 +29,5 @@ const rootRoutes: Routes = [
     }
   ];
   
-  export const rootRouting: ModuleWithProviders<RouterModule> = RouterModule.forRoot(rootRoutes, { relativeLinkResolution: 'legacy' });
+  export const RoutesModule: ModuleWithProviders<RouterModule> = RouterModule.forRoot(rootRoutes, { relativeLinkResolution: 'legacy' });
   

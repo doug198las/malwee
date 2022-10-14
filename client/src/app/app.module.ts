@@ -5,14 +5,16 @@ import { BlockUIModule } from 'ng-block-ui';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-import { rootRouting } from '../routes';
 import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './header/header.component';
 import { MenuComponent } from './menu/menu.component';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatSliderModule } from '@angular/material/slider';
 import { MaterialModule } from './material.module';
+import { DashComponent } from './dash/dash.component';
+import { RoutesModule } from './routes.module';
+import { GroupComponent } from './group/group.component';
+import { UserComponent } from './user/user.component';
 
 @NgModule({
   declarations: [
@@ -20,10 +22,13 @@ import { MaterialModule } from './material.module';
     LoginComponent,
     HomeComponent,
     HeaderComponent,
-    MenuComponent
+    MenuComponent,
+    DashComponent,
+    GroupComponent,
+    UserComponent
   ],
   imports: [
-    rootRouting,
+    RoutesModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,

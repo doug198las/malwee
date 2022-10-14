@@ -1,5 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ObserverService } from 'src/services/observer.service';
+import { MenuItens } from '../menu-itens';
 
 @Component({
   selector: 'app-menu',
@@ -9,9 +11,10 @@ import { ObserverService } from 'src/services/observer.service';
 export class MenuComponent implements OnInit, OnDestroy {
   opened = true;
   subscription : any = null;
+  menu : Array<any> = [];
 
-  constructor(private observer : ObserverService) { 
-
+  constructor(private observer : ObserverService, private router : Router) { 
+    this.menu = MenuItens;
   }
 
   ngOnInit(): void {
@@ -23,5 +26,4 @@ export class MenuComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.observer.unsubscribe(this.subscription);
   }
-
 }
