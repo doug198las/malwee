@@ -21,7 +21,7 @@ export class ObserverService {
     return callback;
   }
 
-  public publish(topic : string, data : any) {
+  public publish(topic : string, data : any = null) {
     const filter = this.topics.filter(t => t.topic == topic);
 
     filter.forEach(f => {

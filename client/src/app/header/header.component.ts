@@ -14,7 +14,7 @@ export class HeaderComponent implements OnInit {
   }
 
   toogle(){
-    this.observerService.publish('menu-toggle', null);
+    this.observerService.publish('menu-toggle');
   }
 
 }
