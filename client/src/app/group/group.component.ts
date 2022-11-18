@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpService } from 'src/services/http.service';
 
 @Component({
   selector: 'app-group',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GroupComponent implements OnInit {
 
-  constructor() { }
+  constructor(private httpSerivce : HttpService) { }
 
   ngOnInit(): void {
+  }
+
+  public click(){
+    this.httpSerivce.get('group').then((data) => {
+      console.log(data);
+    });
   }
 
 }
